@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Gov.ph URL Scan</title>
+    <style>
+      :root {
+        color-scheme: light;
+        --bg: #f4f7fb;
+        --panel: #ffffff;
+        --ink: #122033;
+        --muted: #5d6b82;
+        --accent: #0f6bff;
+        --danger: #c62828;
+        --danger-bg: #fff3f3;
+        --safe-bg: #eefaf2;
+        --safe: #1b7f3a;
+      }
+
+      body {
+        margin: 0;
+        width: 340px;
+        min-height: 320px;
+        font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+        background: linear-gradient(160deg, #eaf2ff 0%, var(--bg) 55%, #f9fbff 100%);
+        color: var(--ink);
+      }
+
+      .shell {
+        padding: 18px;
+      }
+
+      .card {
+        background: var(--panel);
+        border: 1px solid rgba(18, 32, 51, 0.08);
+        border-radius: 16px;
+        padding: 16px;
+        box-shadow: 0 10px 30px rgba(18, 32, 51, 0.08);
+      }
+
+      h1 {
+        margin: 0 0 6px;
+        font-size: 18px;
+      }
+
+      p {
+        margin: 0 0 14px;
+        color: var(--muted);
+        font-size: 13px;
+        line-height: 1.4;
+      }
+
+      input {
+        width: 100%;
+        box-sizing: border-box;
+        padding: 11px 12px;
+        border: 1px solid #cfd8e6;
+        border-radius: 12px;
+        font-size: 13px;
+        outline: none;
+      }
+
+      input:focus {
+        border-color: var(--accent);
+        box-shadow: 0 0 0 3px rgba(15, 107, 255, 0.12);
+      }
+
+      button {
+        margin-top: 12px;
+        width: 100%;
+        border: 0;
+        border-radius: 12px;
+        padding: 11px 12px;
+        background: var(--accent);
+        color: #fff;
+        font-weight: 700;
+        cursor: pointer;
+      }
+
+      button:disabled {
+        opacity: 0.7;
+        cursor: progress;
+      }
+
+      .result {
+        margin-top: 14px;
+        padding: 12px;
+        border-radius: 12px;
+        display: none;
+      }
+
+      .result.safe {
+        display: block;
+        background: var(--safe-bg);
+        color: var(--safe);
+        border: 1px solid rgba(27, 127, 58, 0.18);
+      }
+
+      .result.warning {
+        display: block;
+        background: var(--danger-bg);
+        color: var(--danger);
+        border: 1px solid rgba(198, 40, 40, 0.18);
+      }
+
+      .result strong {
+        display: block;
+        margin-bottom: 4px;
+      }
+
+      .meta {
+        margin-top: 6px;
+        font-size: 12px;
+        color: inherit;
+      }
+
+      .footer {
+        margin-top: 10px;
+        font-size: 11px;
+        color: var(--muted);
+        text-align: center;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="shell">
+      <div class="card">
+        <h1>Gov.ph URL Scanner</h1>
+        <p>Scan the active tab or enter a test URL using the local detection backend.</p>
+        <div id="activeTabLabel">Reading active tab...</div>
+        <input id="urlInput" type="text" spellcheck="false" autocomplete="off" />
+        <button id="scanButton" type="button">Scan URL</button>
+        <div id="resultBox" class="result"></div>
+        <div class="footer">Local test mode only.</div>
+      </div>
+    </div>
+    <script src="popup.js"></script>
+  </body>
+</html>
