@@ -77,25 +77,48 @@ The simulation is independent of Flask and MySQL:
 .venv/bin/python simulation/sim_enhanced.py
 ```
 
-It uses the hardcoded pair in
-[`simulation/thesis_simulation.py`](simulation/thesis_simulation.py) and prints
-the detailed operation trace.
+It uses a hardcoded target/candidate pair and prints the detailed operation
+trace. On Windows, run:
+
+```powershell
+.\run-simulation.ps1
+```
+
+The `run-simulation.bat` file can also be double-clicked.
 
 ## Chrome extension
 
-Run `./DEFENSE_2_OPEN_CHROME_EXTENSION.command`, then load
-[`clients/extension/`](clients/extension/) as an unpacked extension in Chrome.
+1. Start the backend with `.\start-backend.ps1`.
+2. Open Chrome and go to `chrome://extensions`.
+3. Enable **Developer mode**.
+4. Click **Load unpacked**.
+5. Select the repository's `clients\extension` folder.
+6. Open the extension from Chrome's toolbar and scan the active tab or enter a
+   test URL.
+
+The extension calls the local backend at
+`http://127.0.0.1:5000/check-url`, so the backend must remain running. On
+macOS, `./DEFENSE_2_OPEN_CHROME_EXTENSION.command` opens the extensions page.
 
 ## Research experiment
 
-Run:
+The research experiment is independent of MySQL and can be run after
+`.\setup.ps1`:
 
 ```bash
 ./RESEARCH_RUN_EXPERIMENT.command
 ```
 
 Research input data is in [`research/data/`](research/data/), and generated
-results are written to [`research/results/`](research/results/).
+results are written to `research/results/`. On Windows, run:
+
+```powershell
+.\run-research.ps1
+```
+
+This runs both the calibration experiment and the comparative evaluation.
+Generated results are intentionally ignored by Git so each user can produce
+their own results locally.
 
 To regenerate the comparative evaluation dataset used for Table 3.3, run:
 
@@ -103,8 +126,8 @@ To regenerate the comparative evaluation dataset used for Table 3.3, run:
 .venv/bin/python generate_and_evaluate.py
 ```
 
-This loads the Philippine TXT list and the current US CSV list (or
-`research/data/us_gov_domains.txt` when supplied), generates deterministic
+This loads `research/data/ph_gov_domains.txt` and the current US CSV list,
+generates deterministic
 visual-homoglyph, transposition, omission, and insertion variants, prints
 TP/TN/FP/FN, precision, recall, and F1-score for both algorithms, and writes
 line-by-line results to `research/results/updated_results.csv`.

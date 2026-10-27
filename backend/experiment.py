@@ -280,7 +280,7 @@ def main():
     parser.add_argument(
         "domains",
         nargs="?",
-        default=str(Path(__file__).parents[1] / "research" / "data" / "domains.txt"),
+        default=str(Path(__file__).parents[1] / "research" / "data" / "ph_gov_domains.txt"),
     )
     parser.add_argument(
         "--output",

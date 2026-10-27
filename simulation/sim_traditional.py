@@ -90,8 +90,11 @@ def get_inputs():
         candidate = sys.argv[2] if len(sys.argv) > 2 else default_candidate
     else:
         # With no arguments, allow interactive input and retain defaults on Enter.
-        target = input("Target URL: ").strip() or default_target
-        candidate = input("Candidate URL: ").strip() or default_candidate
+        try:
+            target = input("Target URL: ").strip() or default_target
+            candidate = input("Candidate URL: ").strip() or default_candidate
+        except EOFError:
+            target, candidate = default_target, default_candidate
     return normalize(target), normalize(candidate)
 
 
