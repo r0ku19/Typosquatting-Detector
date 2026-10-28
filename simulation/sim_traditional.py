@@ -99,11 +99,22 @@ def get_inputs():
 
 
 def main():
+    # Step 1: Ask the user for the real domain and the suspicious domain.
+    # These are the two strings the program will compare.
     target, candidate = get_inputs()
-    # Pass candidate first because the algorithm names it source.
+
+    # Step 2: Compare the suspicious domain against the real one.
+    # The algorithm measures how many insertions, deletions, or substitutions
+    # are needed to turn one domain into the other.
+    # "candidate" is checked first because the algorithm treats it as the source.
     raw_distance, path = levenshtein(candidate, target)
 
+    # Step 3: Print a heading before showing the edit-by-edit comparison.
     print(f"[Target: {target} | Candidate: {candidate}] BEFORE Similarity Check...")
+
+    # Step 4: Walk through each character change in order.
+    # Each item in "path" explains one edit (match, substitute, insert, or delete)
+    # and shows the running total distance so you can see how the difference grows.
     for iteration, (target_char, source_char, operation, cost, current_dist) in enumerate(
         path, start=1
     ):
@@ -112,10 +123,18 @@ def main():
             f"| op={operation} | cost={cost:.2f} | current_dist={current_dist:.2f}"
         )
 
-    # Traditional detection uses a direct raw-distance cutoff.
+    # Step 5: Decide if the candidate is likely a typo-squatting risk.
+    # The traditional method says: if the raw string distance is very small,
+    # it is probably a small typo or look-alike domain instead of a random domain.
     risk_level = "HIGH_RISK_TYPOSQUAT" if raw_distance <= 2.0 else "SAFE"
-    # Normalize distance by the longer hostname so lengths are comparable.
+
+    # Step 6: Convert the raw distance into a similarity score.
+    # This makes the result easier to read because it scales the value between 0 and 1.
+    # A score near 1.0 means the domains look almost identical.
     similarity = 1.0 - raw_distance / max(len(target), len(candidate), 1)
+
+    # Step 7: Print the final verdict for the user.
+    # This tells the user whether the suspicious domain is considered risky.
     print(
         f"[Target: {target} | Candidate: {candidate}] "
         f"AFTER Raw_Dist={raw_distance:.2f} Similarity={similarity:.2f} "
